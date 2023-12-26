@@ -28,6 +28,7 @@
                 <div class="field">
                     <h3>Select File</h3>
                     <input  placeholder="Input File" type="file" id="uploadFile" accept=".csv, .json"/>
+                    <h4> Supported files Type(s): .CSV, .JSON</h4>
                 </div>
             </div>
 
@@ -94,9 +95,6 @@
         </div>
     </div>
     
-
-
-
     <script>
 
         // Data Array to stote file data
@@ -245,11 +243,7 @@
                             }
                         }
                     str = str + "</div>";
-
-
                 }
-                
-                
             }
             localStorage.setItem("outputContent",str);
             window.location.href="./Display_Data.html";
@@ -258,15 +252,6 @@
        
     </script>
 
-
-
-
 </body>
 
 </html>
-
-
-
-
-
-
