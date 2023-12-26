@@ -1,0 +1,74 @@
+body {
+  overflow-y: scroll;
+}
+body::-webkit-scrollbar {
+  width: 0;
+}
+#container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.child {
+  border: 1px solid #ddd;
+  margin: 10px;
+  padding: 15px;
+  width: calc(25% - 20px);
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+
+  flex: 1 0 20%;
+}
+
+.child:hover {
+  transform: scale(1.05);
+}
+
+.child h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.child h3,
+.child h4,
+.child h5 {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.child h3 {
+  color: #e44d26;
+}
+
+.child h5 {
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .child {
+    width: calc(50% - 20px);
+  }
+}
+
+.child-title {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.child-info {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.child-separator {
+  height: 1px;
+  background-color: #ddd;
+  margin: 10px 0;
+}

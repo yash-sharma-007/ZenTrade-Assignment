@@ -1,0 +1,272 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 2</title>
+    <link rel="stylesheet" href="./task2.css">
+    <link rel="stylesheet" href="./task1.css">
+    
+</head>
+
+<body>
+    <div>
+        <h1 align="center">Task 2</h1>
+        <h1 align="center">
+            <button> <a href="../index.html"  > Home</a></button>
+        </h1>
+    </div>
+
+    <div class="main">
+        <h2>Import Products</h2>
+        <div class="upper">
+            <div class="left ">
+                <h3> Step - 1</h3>
+                <div class="field">
+                    <h3>Select File</h3>
+                    <input  placeholder="Input File" type="file" id="uploadFile" accept=".csv, .json"/>
+                </div>
+            </div>
+
+            <div class="right ">
+                <h3> Step - 2</h3>
+                <div class="field">
+                    <div>
+                        <label for="File Type">File Type</label>
+                        <select title="filetype" name="filetype" id="filetype">
+                            <option value="csv"> csv</option>
+                            <option value="json"> json</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="characterencoding"> Character Encoding</label>
+                        <select title="characterencoding" name="characterencoding" id="characterencoding">
+                            <option value="UTF-8"> UTF-8</option>
+                            <option value="UTF-16BE"> UTF-16BE</option>
+                            <option value="UTF-32BE">UTF-32BE</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="Delimiter"> Delimiter</label>
+                        <select title="Delimiter" name="Delimiter" id="Delimiter">
+                            <option value="comma"> comma</option>
+                            <option value="curly braces"> curly braces</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="header"> Has Header</label>
+                        <input type="checkbox" name="header" id="header">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="lower ">
+            <h3> Step - 3</h3>
+            <div class="field">
+                <h3>Display Handling</h3>
+                <h3>Select the fields to be displayed</h3>
+                <div class="maindiv">
+                    <div class="div1">
+                        <h4>Available fields</h4>
+                        <select multiple title="availablefields" name="availablefields" id="availablefields">
+                        </select>
+                    </div>
+                    <div class="div2">
+                        <button onclick="moveToSelected()"> >> </button>
+                        <button onclick="moveToAvailable()"> << </button>
+                    </div>
+                    <div class="div3">
+                        <h4>fields to be displayed</h4>
+                        <select multiple title="selectedfields" name="selectedfields" id="selectedfields">
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer"> 
+            <button class="cancel">Cancel</button> 
+            <button onclick="display_data()" class="next">  Next  </button> 
+        </div>
+    </div>
+    
+
+
+
+    <script>
+
+        // Data Array to stote file data
+        var Data = []
+
+        // Fields names
+        var Title = []
+
+        // boolean array to store which field are selected
+        var  selected = []
+
+        // check for which file selected
+        var csv=true
+
+        function setFalse(selected,n){
+            for(var i=0;i<n;i++){
+                selected[i]=false;
+            }
+        }
+        var availableFieldsSelect = document.getElementById('availablefields');
+
+        document.getElementById('uploadFile').addEventListener('change', function (event) {
+            availableFieldsSelect.innerHTML = ''; 
+            handleFileSelect(event);
+        });
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+
+            if (!file) {
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                const content = e.target.result;
+
+                if (file.name.endsWith('.json')) {
+                    populateFieldsFromJSON(content);
+                } else if (file.name.endsWith('.csv')) {
+                    populateFieldsFromCSV(content);
+                } else {
+                    alert('Unsupported file type. Please upload a .csv or .json file.');
+                }
+            };
+
+            reader.readAsText(file);
+        }
+
+        function populateFieldsFromJSON(content) {
+            try {
+                const jsonData = JSON.parse(content);
+                csv=false
+                if (Array.isArray(jsonData) && jsonData.length > 0) {
+                    const headers = Object.keys(jsonData[0]);
+                    Title=headers;
+                    Data=jsonData;
+                    setFalse(selected,Title.length)
+                    populateSelectBox('availablefields', headers);
+                }
+            } catch (error) {
+                console.error('Error parsing JSON:', error.message);
+            }
+        }
+
+        function populateFieldsFromCSV(content) {
+            const lines = content.split('\n');
+
+            if (lines.length > 1) {
+                const headers = lines[0].split(',');
+                Title=headers;
+                Data=lines;
+                setFalse(selected,Title.length)
+                populateSelectBox('availablefields', headers);
+            }
+        }
+
+        function populateSelectBox(selectId, options) {
+            var selectBox = document.getElementById(selectId);
+
+            // Add new options
+            for (var i = 0; i < options.length; i++) {
+                var option = document.createElement('option');
+                option.value = options[i];
+                option.text = options[i];
+                selectBox.add(option);
+            }
+        }
+
+        // Function to move options between select boxes
+        function moveToSelected() {
+            moveOptions('availablefields', 'selectedfields');
+        }
+       
+        function moveToAvailable() {
+            moveOptions('selectedfields', 'availablefields');
+        }
+       
+        function moveOptions(fromId, toId) {
+            var fromSelect = document.getElementById(fromId);
+            var toSelect = document.getElementById(toId);
+            if(fromSelect.options.length){
+            for (var i = 0; i < fromSelect.options.length; i++) {
+                if (fromSelect.options[i].selected) {
+                    toSelect.appendChild(fromSelect.options[i]);
+                    i--;
+                }
+            }}
+        }
+
+        function display_data() {
+            const output = document.getElementById('output')
+            var selected_fields = document.getElementById('selectedfields')
+            var temp = [];
+            for(i=0;i<selected_fields.options.length;i++){
+                temp.push(selected_fields.options[i].value)
+            }
+            
+            for(var i=0;i<Title.length;i++){
+                if(temp.includes(Title[i])){
+                    selected[i]=true;
+                }
+            }
+
+            console.log(selected);
+            var str = ""
+            for(var i=1;i<Data.length-1;i++){
+
+                if(csv){
+                    // Data Conversion for csv file
+                            const tuple = Data[i].split(',');
+                            str = str + "<div class=\"child\">"
+                            for(var j=0;j<Title.length;j++){
+                                if(selected[j]){
+                                    str = str + `<h4 class="child-info">${Title[j]}: ${tuple[j]}</h4>`;
+                                }
+                            }
+                            str = str + "</div>";
+                }
+                else{
+                    // Data Conversion for json file
+                    str = str + "<div class=\"child\">"
+                        for(var j=0;j<Title.length;j++){
+                            if(selected[j]){
+                                str = str + `<h4 class="child-info">${Title[j]}: ${Data[i][Title[j]]}</h4>`;
+                            }
+                        }
+                    str = str + "</div>";
+
+
+                }
+                
+                
+            }
+            localStorage.setItem("outputContent",str);
+            window.location.href="./Display_Data.html";
+            
+        }
+       
+    </script>
+
+
+
+
+</body>
+
+</html>
+
+
+
+
+
+

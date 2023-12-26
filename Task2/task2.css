@@ -1,0 +1,106 @@
+*{
+    padding: 3px;
+    margin: 3px;
+}
+.main{
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(226, 226, 226);
+}
+
+.field{
+    display: flex;
+    flex-direction: column;
+}
+
+.upper{
+    height: 40%;
+    display: flex;
+}
+
+.left{
+    width: 50%;
+    display: flex;
+    padding: 20px;
+    background-color: white;
+}
+
+.right{
+    width: 50%;
+    display: flex;
+    padding: 20px;
+    background-color: white;
+}
+
+.lower{
+    height: 35%;
+    display: flex;
+    padding: 20px;
+    background-color: white;
+}
+
+.field{
+    display: flex;
+    flex-direction: column;
+}
+
+.maindiv{
+    display: flex;
+}
+
+.maindiv .div1, .maindiv .div3{
+    display: flex;
+    flex-direction: column;
+}
+
+.maindiv .div2{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#availablefields,#selectedfields{
+    overflow-y: scroll;
+    height: 150px;
+}
+
+#availablefields::-webkit-scrollbar{
+    width: 0;
+}
+
+#selectedfields::-webkit-scrollbar{
+    width: 0;
+}
+
+.footer{
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    padding: 5px;
+}
+
+.next{
+    font-size: 20px;
+    font-weight: bolder;
+    height: 30px;
+    width: 100px;
+    background-color: rgb(34, 206, 34);
+    cursor: pointer;
+}
+
+.next a{
+    text-decoration: none;
+    color: black;
+}
+
+.cancel{
+    font-size: 20px;
+    font-weight: bolder;
+    height: 30px;
+    width: 100px;
+    background-color: red;
+    cursor: pointer;
+}
+
+

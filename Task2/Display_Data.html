@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Data</title>
+    <link rel="stylesheet" href="../Task1/task1.css">
+    <style>
+        #output{
+            display: flex;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <button> <a href="./task2.html"> Back </a> </button>
+    <div id="output">
+
+    </div>
+    <script>
+        document.getElementById('output').innerHTML = localStorage.getItem("outputContent");
+        localStorage.removeItem("outputContent")
+    </script>
+</body>
+</html>
