@@ -15,7 +15,7 @@
 }
 
 .upper{
-    height: 40%;
+    height: 30%;
     display: flex;
 }
 
@@ -34,7 +34,7 @@
 }
 
 .lower{
-    height: 35%;
+    height: 45%;
     display: flex;
     padding: 20px;
     background-color: white;
